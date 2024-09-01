@@ -1,0 +1,11 @@
+POST http://localhost:3001/admin/register
+Content-Type: application/json
+Accept: application/json
+
+{
+  "cedula": "504390315",
+  "username": "administer",
+  "password": "admin",
+  "email": "a@gmail.com"
+}
+

@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const receipts_controller_1 = require("../controllers/receipts.controller");
+const receipts_service_1 = require("../services/receipts.service");
+const receiptsRouter = (0, express_1.Router)();
+const receiptService = new receipts_service_1.ReceiptsService();
+const receiptController = new receipts_controller_1.ReceiptController(receiptService);
+receiptsRouter.post("/", receiptController.createReceipt);
+receiptsRouter.get("/", receiptController.getReceipts);
+receiptsRouter.get("/:cedula", receiptController.getReceipt);
+receiptsRouter.get("/pdf/:id", receiptService.generatePDF);
+receiptsRouter.patch("/:id", receiptController.updateReceiptStatus);
+exports.default = receiptsRouter;
