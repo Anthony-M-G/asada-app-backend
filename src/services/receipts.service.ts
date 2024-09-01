@@ -6,7 +6,6 @@ import PDFDocument from "pdfkit";
 export class ReceiptsService {
   createReceipt = async ({ receipt }: { receipt: IReceipt }) => {
     try {
-      console.log(receipt);
       const newReceipt = new Receipt(receipt);
       return await newReceipt.save();
     } catch (error) {
@@ -51,7 +50,6 @@ export class ReceiptsService {
     try {
       const { id } = req.params;
       const receipt = await Receipt.findById(id).exec();
-      console.log(receipt);
       if (!receipt) {
         return res.status(404).json({ message: "Receipt not found" });
       }
