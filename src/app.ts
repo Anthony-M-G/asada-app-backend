@@ -13,7 +13,7 @@ const app = express();
 //cors
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://asada-app-frontend.vercel.app/",
     credentials: true,
   })
 );
