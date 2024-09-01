@@ -33,10 +33,11 @@ export class AdminService {
 
       res
         .cookie("token", token, {
-          httpOnly: true, // Asegura que la cookie no sea accesible desde JavaScript del lado del cliente
-          secure: true, // Solo se transmitirá en conexiones HTTPS
-          sameSite: "none", //
-          maxAge: 24 * 60 * 60 * 1000, // Tiempo de vida de la cookie (aquí, 24 horas)
+          httpOnly: true, // No accesible desde JavaScript del lado del cliente
+          secure: process.env.NODE_ENV === "production", // Solo se transmite en HTTPS en producción
+          sameSite: "None", // Permite que se envíe en solicitudes cross-site
+          maxAge: 24 * 60 * 60 * 1000, // Tiempo de vida de la cookie (24 horas)
+          path: "/", // La cookie estará disponible en todo el sitio
         })
         .status(200)
         .send(userLogged);
