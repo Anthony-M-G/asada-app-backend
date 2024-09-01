@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { jwt_secret } from "../../config";
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
+import { max } from "moment";
 
 export class AdminService {
   static login = async (req: Request, res: any) => {
@@ -33,11 +34,10 @@ export class AdminService {
 
       res
         .cookie("token", token, {
-          httpOnly: false,
-          secure: true,
-          sameSite: "none",
-          maxAge: 24 * 60 * 60 * 1000,
-          path: "/",
+          httpOnly: true, // Asegura que la cookie solo sea accesible a través de HTTP
+          secure: true, // Usa 'true' solo si estás usando HTTPS
+          sameSite: "None", // Permite cookies en solicitudes de terceros
+          maxAge: 3600000, // Tiempo de vida de la cookie en milisegundos
         })
         .status(200)
         .send(userLogged);
