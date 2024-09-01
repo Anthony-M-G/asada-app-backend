@@ -35,7 +35,7 @@ export class AdminService {
         .cookie("token", token, {
           httpOnly: false,
           secure: true,
-          sameSite: "strict",
+          sameSite: "none",
           maxAge: 24 * 60 * 60 * 1000,
           path: "/",
         })
