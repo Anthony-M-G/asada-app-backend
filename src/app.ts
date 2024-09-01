@@ -15,7 +15,7 @@ app.use(
   cors({
     origin: "https://asada-app-frontend.vercel.app", // O '*' para permitir todos los orígenes
     methods: "GET,POST,PUT,PATCH,DELETE",
-    allowedHeaders: "Content-Type, application/json",
+    allowedHeaders: "Content-Type,Authorization",
     credentials: true,
   })
 );
@@ -27,7 +27,7 @@ app.options(
   cors({
     origin: "https://asada-app-frontend.vercel.app",
     methods: "GET,POST,PUT,PATCH,DELETE",
-    allowedHeaders: "Content-Type, application/json",
+    allowedHeaders: "Content-Type,Authorization",
     credentials: true,
   })
 );
