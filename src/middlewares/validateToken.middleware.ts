@@ -7,9 +7,9 @@ export const validateToken = async (
   res: Response,
   next: NextFunction
 ) => {
-  const token: any = req.cookies.token;
+  const token: string | undefined | null = req.cookies.token;
   console.log(token);
-  if (!token) {
+  if (typeof token === "undefined" || token === null) {
     return res.status(401).json({ message: "Access denied" });
   }
   try {
@@ -17,6 +17,7 @@ export const validateToken = async (
       if (err) {
         return res.status(401).send({ message: "Unauthorized" });
       }
+      console.log(decoded);
 
       next();
     });
