@@ -4,10 +4,9 @@ import jwt from "jsonwebtoken";
 import { jwt_secret } from "../../config";
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import { max } from "moment";
 
 export class AdminService {
-  static login = async (req: Request, res: any) => {
+  static login = async (req: Request, res: Response) => {
     try {
       const { username, cedula, password } = req.body;
       const userLogged = await Admin.findOne({
@@ -26,7 +25,6 @@ export class AdminService {
           cedula: userLogged.cedula,
           username: userLogged.username,
           email: userLogged.email,
-          password: userLogged.password,
         },
         jwt_secret,
         { expiresIn: "1h" }
@@ -34,15 +32,16 @@ export class AdminService {
 
       res
         .cookie("token", token, {
-          httpOnly: false, // No permite acceso del lado del cliente
-          secure: true, // Usa 'true' solo si estás usando HTTPS
+          httpOnly: true, // No permite acceso del lado del cliente
+          secure: process.env.NODE_ENV === "production", // Usa 'true' solo si estás usando HTTPS
           sameSite: "None", // Permite cookies en solicitudes de terceros
           maxAge: 3600000, // Tiempo de vida de la cookie en milisegundos
         })
         .status(200)
-        .send(userLogged);
+        .json({ message: "Login successful", user: userLogged });
     } catch (error) {
       console.log(error);
+      res.status(500).json({ message: "Internal server error" });
     }
   };
 
@@ -73,22 +72,22 @@ export class AdminService {
 
   static verifyToken = async (req: Request, res: Response) => {
     const token: any = req.cookies.token;
+    console.log("Token from cookies:", token);
     if (!token) {
       return res.status(401).json({ message: "Access denied" });
     }
     try {
-      const decoded = jwt.verify(
-        token,
-        jwt_secret,
-        (err: any, decoded: any) => {
-          if (err) {
-            return res.status(401).send({ message: "Unauthorized" });
-          }
-          const { cedula, username, email, password } = decoded;
-          return res.status(200).json({ username });
+      jwt.verify(token, jwt_secret, (err: any, decoded: any) => {
+        if (err) {
+          console.error("Token verification error:", err);
+          return res.status(401).send({ message: "Unauthorized" });
         }
-      );
+        console.log("Decoded token:", decoded);
+        const { username } = decoded;
+        return res.status(200).json({ username });
+      });
     } catch (error) {
+      console.error("Unexpected error:", error);
       return res.status(400).json({ message: "Invalid token" });
     }
   };
