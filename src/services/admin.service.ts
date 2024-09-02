@@ -34,7 +34,7 @@ export class AdminService {
         .cookie("token", token, {
           httpOnly: true, // No permite acceso del lado del cliente
           secure: process.env.NODE_ENV === "production", // Usa 'true' solo si estás usando HTTPS
-          sameSite: "None", // Permite cookies en solicitudes de terceros
+          sameSite: "none", // Permite cookies en solicitudes de terceros
           maxAge: 3600000, // Tiempo de vida de la cookie en milisegundos
         })
         .status(200)
