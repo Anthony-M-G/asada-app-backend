@@ -34,7 +34,7 @@ export class AdminService {
 
       res
         .cookie("token", token, {
-          httpOnly: true, // Asegura que la cookie solo sea accesible a través de HTTP
+          httpOnly: false, // No permite acceso del lado del cliente
           secure: true, // Usa 'true' solo si estás usando HTTPS
           sameSite: "None", // Permite cookies en solicitudes de terceros
           maxAge: 3600000, // Tiempo de vida de la cookie en milisegundos

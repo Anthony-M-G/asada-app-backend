@@ -1,17 +1,12 @@
 import jwt from "jsonwebtoken";
 import { jwt_secret } from "../../config";
 import { Request, Response, NextFunction } from "express";
-import { set } from "mongoose";
 
 export const validateToken = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  setTimeout(() => {
-    console.log(req.cookies);
-  }, 2000);
-
   const token: string | undefined | null = req.cookies?.token;
   console.log(token);
 
