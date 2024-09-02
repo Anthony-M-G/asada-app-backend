@@ -40,20 +40,20 @@ AdminService.login = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             cedula: userLogged.cedula,
             username: userLogged.username,
             email: userLogged.email,
-            password: userLogged.password,
         }, config_1.jwt_secret, { expiresIn: "1h" });
-        console.log(token);
         res
             .cookie("token", token, {
-            httpOnly: false,
-            secure: true,
-            sameSite: "none",
+            httpOnly: true, // No permite acceso del lado del cliente
+            secure: true, // Usa 'true' solo si estás usando HTTPS
+            sameSite: "none", // Permite cookies en solicitudes de terceros
+            maxAge: 3600000, // Tiempo de vida de la cookie en milisegundos
         })
             .status(200)
-            .send(userLogged);
+            .json({ message: "Login successful", user: userLogged });
     }
     catch (error) {
         console.log(error);
+        res.status(500).json({ message: "Internal server error" });
     }
 });
 AdminService.register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -83,19 +83,23 @@ AdminService.logout = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 AdminService.verifyToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const token = req.cookies.token;
+    console.log("Token from cookies:", token);
     if (!token) {
         return res.status(401).json({ message: "Access denied" });
     }
     try {
-        const decoded = jsonwebtoken_1.default.verify(token, config_1.jwt_secret, (err, decoded) => {
+        jsonwebtoken_1.default.verify(token, config_1.jwt_secret, (err, decoded) => {
             if (err) {
+                console.error("Token verification error:", err);
                 return res.status(401).send({ message: "Unauthorized" });
             }
-            const { cedula, username, email, password } = decoded;
+            console.log("Decoded token:", decoded);
+            const { username } = decoded;
             return res.status(200).json({ username });
         });
     }
     catch (error) {
+        console.error("Unexpected error:", error);
         return res.status(400).json({ message: "Invalid token" });
     }
 });

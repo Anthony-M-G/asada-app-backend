@@ -16,12 +16,14 @@ exports.validateToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = require("../../config");
 const validateToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const token = req.cookies.token;
+    var _a;
+    const token = (_a = req.cookies) === null || _a === void 0 ? void 0 : _a.token;
+    console.log(token);
     if (!token) {
         return res.status(401).json({ message: "Access denied" });
     }
     try {
-        const decoded = jsonwebtoken_1.default.verify(token, config_1.jwt_secret, (err, decoded) => {
+        jsonwebtoken_1.default.verify(token, config_1.jwt_secret, (err, decoded) => {
             if (err) {
                 return res.status(401).send({ message: "Unauthorized" });
             }
@@ -30,7 +32,7 @@ const validateToken = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         });
     }
     catch (error) {
-        return res.status(400).json({ message: "Invalid token" });
+        return res.status(500).send({ message: "Internal Server Error" });
     }
 });
 exports.validateToken = validateToken;

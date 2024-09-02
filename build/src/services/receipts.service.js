@@ -20,7 +20,6 @@ class ReceiptsService {
     constructor() {
         this.createReceipt = (_b) => __awaiter(this, [_b], void 0, function* ({ receipt }) {
             try {
-                console.log(receipt);
                 const newReceipt = new receipt_model_1.Receipt(receipt);
                 return yield newReceipt.save();
             }
@@ -61,7 +60,6 @@ class ReceiptsService {
             try {
                 const { id } = req.params;
                 const receipt = yield receipt_model_1.Receipt.findById(id).exec();
-                console.log(receipt);
                 if (!receipt) {
                     return res.status(404).json({ message: "Receipt not found" });
                 }
