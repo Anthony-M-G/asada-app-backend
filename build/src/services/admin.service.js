@@ -43,13 +43,15 @@ AdminService.login = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }, config_1.jwt_secret, { expiresIn: "1h" });
         res
             .cookie("token", token, {
-            httpOnly: true, // No permite acceso del lado del cliente
+            httpOnly: false, // No permite acceso del lado del cliente
             secure: true, // Usa 'true' solo si estás usando HTTPS
-            sameSite: "none", // Permite cookies en solicitudes de terceros
+            sameSite: "none",
+            path: "/",
+            domain: "https://asada-app-frontend.vercel.app",
             maxAge: 3600000, // Tiempo de vida de la cookie en milisegundos
         })
             .status(200)
-            .json({ message: "Login successful", user: userLogged });
+            .json({ user: userLogged });
     }
     catch (error) {
         console.log(error);
