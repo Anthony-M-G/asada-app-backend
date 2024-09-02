@@ -45,7 +45,7 @@ AdminService.login = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             .cookie("token", token, {
             httpOnly: false, // No permite acceso del lado del cliente
             secure: true, // Usa 'true' solo si estás usando HTTPS
-            sameSite: "none",
+            sameSite: "strict", // Protege la cookie de CSRF
             path: "/",
             domain: "https://asada-app-frontend.vercel.app",
             maxAge: 3600000, // Tiempo de vida de la cookie en milisegundos
