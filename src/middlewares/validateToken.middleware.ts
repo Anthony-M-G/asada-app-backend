@@ -8,6 +8,7 @@ export const validateToken = async (
   next: NextFunction
 ) => {
   const token: any = req.cookies.token;
+  console.log(token);
   if (!token) {
     return res.status(401).json({ message: "Access denied" });
   }
