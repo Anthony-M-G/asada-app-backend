@@ -32,11 +32,10 @@ export class AdminService {
 
       res
         .cookie("token", token, {
-          httpOnly: true, // No permite acceso del lado del cliente
-          secure: true, // Usa 'true' si estás usando HTTPS
-          sameSite: "strict", // Protege la cookie de CSRF
+          httpOnly: true, // Protege la cookie de acceso desde JavaScript
+          secure: true, // Asegúrate de que solo se envíe a través de HTTPS
+          sameSite: "none", // Permite compartir la cookie entre dominios
           path: "/",
-          domain: "asada-app-frontend.vercel.app", // Solo el dominio
           maxAge: 3600000, // Tiempo de vida de la cookie en milisegundos
         })
         .status(200)
