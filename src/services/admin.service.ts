@@ -38,7 +38,7 @@ export class AdminService {
           maxAge: 3600000, // Tiempo de vida de la cookie en milisegundos
         })
         .status(200)
-        .json({ message: "Login successful", user: userLogged });
+        .json({ user: userLogged });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Internal server error" });
