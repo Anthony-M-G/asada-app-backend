@@ -35,7 +35,7 @@ export class AdminService {
            maxAge: 900000,          // 15 minutos
            httpOnly: true,          // Solo accesible por el servidor
            secure: true
-           sameSite: 'lax'                // Disponible en todo el dominio
+           sameSite: 'none'                // Disponible en todo el dominio
         })    
         .status(200)
         .json({ user: userLogged });
