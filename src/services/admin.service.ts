@@ -31,7 +31,13 @@ export class AdminService {
       );
 
       res
-        .cookie("token", token)
+        .cookie("token", token, {
+           maxAge: 900000,          // 15 minutos
+           httpOnly: true,          // Solo accesible por el servidor
+           secure: true
+           sameSite: 'lax',       
+           path: '/'                // Disponible en todo el dominio
+        })
         .status(200)
         .json({ user: userLogged });
     } catch (error) {
