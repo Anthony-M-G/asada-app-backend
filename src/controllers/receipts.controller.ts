@@ -51,6 +51,8 @@ export class ReceiptController {
   updateReceiptStatus = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
+      console.log("id del que quiero actualizar el estado "+id);
+      
       const receipt = await this.receiptService.updateReceiptStatus(id);
       res.status(200).json(receipt);
     } catch (error: any) {

@@ -7,7 +7,7 @@ export const validateToken = async (
   res: Response,
   next: NextFunction
 ) => {
-  const token: string | undefined | null = req.cookies?.token;
+  let token: string | undefined | null = req.cookies?.token;
   console.log(token);
 
   if (!token) {

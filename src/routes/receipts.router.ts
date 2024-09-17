@@ -10,6 +10,6 @@ receiptsRouter.post("/", receiptController.createReceipt);
 receiptsRouter.get("/", receiptController.getReceipts);
 receiptsRouter.get("/:cedula", receiptController.getReceipt);
 receiptsRouter.get("/pdf/:id", receiptService.generatePDF);
-receiptsRouter.patch("/:id", receiptController.updateReceiptStatus);
+receiptsRouter.put("/:id", receiptController.updateReceiptStatus);
 
 export default receiptsRouter;
