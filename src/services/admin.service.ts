@@ -31,11 +31,7 @@ export class AdminService {
       );
 
       res
-        .cookie("token", token, {
-          httpOnly: true, // Protege la cookie de acceso desde JavaScript
-          secure: true, // Se asegura de que la cookie solo se envíe a través de HTTPS
-          sameSite: "strict", // Permite compartir la cookie entre dominios
-        })
+        .cookie("token", token)
         .status(200)
         .json({ user: userLogged });
     } catch (error) {
